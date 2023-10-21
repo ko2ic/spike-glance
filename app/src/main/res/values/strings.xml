@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">spike-glance</string>
+    <string name="widget_title">Hello</string>
+    <string name="widget_description">Glanceのサンプル</string>
+</resources>
