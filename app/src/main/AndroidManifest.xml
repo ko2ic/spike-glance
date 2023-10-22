@@ -2,16 +2,29 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:name=".App"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Spikeglance"
         tools:targetApi="31">
+        <service
+            android:enabled="true"
+            android:exported="true"
+            android:foregroundServiceType="shortService"
+            android:name=".service.MyForegroundService" />
+        <receiver
+            android:exported="true"
+            android:name=".receiver.MyBroadcastReceiver" />
+
         <activity
             android:exported="true"
             android:label="@string/app_name"
@@ -19,13 +32,23 @@
             android:theme="@style/Theme.Spikeglance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+
+        <activity
+            android:exported="true"
+            android:name=".MyGlanceAppWidgetConfigure">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
         </activity>
 
-        <receiver android:name=".MyGlanceAppWidgetReceiver"
-            android:exported="true">
+        <receiver
+            android:enabled="false"
+            android:exported="true"
+            android:name=".MyGlanceAppWidgetReceiver">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -35,6 +58,28 @@
                 android:resource="@xml/app_widget_list_glance" />
         </receiver>
 
+        <!-- another widget -->
+
+        <activity
+            android:exported="true"
+            android:name=".MyGlanceAppWidgetConfigure2">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+
+        <receiver
+            android:enabled="false"
+            android:exported="true"
+            android:name=".MyGlanceAppWidgetReceiver2">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/app_widget_list_glance2" />
+        </receiver>
     </application>
 
 </manifest>
