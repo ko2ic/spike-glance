@@ -1,7 +1,9 @@
 package com.ko2ic.spike.glance
 
 import android.content.Context
-import android.os.Build
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -9,21 +11,25 @@ import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
 import androidx.glance.GlanceTheme
 import androidx.glance.LocalContext
+import androidx.glance.action.ActionParameters
+import androidx.glance.action.actionParametersOf
+import androidx.glance.action.actionStartActivity
+import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.appWidgetBackground
-import androidx.glance.appwidget.cornerRadius
 import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
-import androidx.glance.layout.Column
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
 import androidx.glance.layout.padding
+import androidx.glance.material.ColorProviders
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
 
 class MyGlanceAppWidget : GlanceAppWidget() {
+
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         provideContent {
             Content()
@@ -33,28 +39,34 @@ class MyGlanceAppWidget : GlanceAppWidget() {
     @Composable
     fun Content() {
         GlanceTheme {
-                LazyColumn(
-                    modifier = GlanceModifier
-                        .fillMaxSize()
-                        .padding(16.dp)
-                        .appWidgetBackground()
-                        .background(GlanceTheme.colors.background)
-                ) {
-                    items(samples.size) { id ->
-                        Text(
-                            text = "${LocalContext.current.getString(R.string.widget_title)} ${samples[id]}",
-                            modifier = GlanceModifier
-                                .fillMaxWidth()
-                                .padding(8.dp),
-                            style = TextStyle(
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 18.sp,
+            LazyColumn(
+                modifier = GlanceModifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+                    .appWidgetBackground()
+                    .background(GlanceTheme.colors.primaryContainer)
+            ) {
+                items(samples.size) { id ->
+                    Text(
+                        text = "${LocalContext.current.getString(R.string.widget_title)} ${samples[id]}",
+                        modifier = GlanceModifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
+                            .clickable(actionStartActivity<MainActivity>(
+                                actionParametersOf(
+                                    ActionParameters.Key<Int>(MainActivity.widgetItemKey) to id
+                                ))
                             ),
-                        )
-                    }
+                        style = TextStyle(
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 18.sp,
+                        ),
+                    )
                 }
             }
         }
+    }
+
     private val samples = (0..5).map { it }
 }
 

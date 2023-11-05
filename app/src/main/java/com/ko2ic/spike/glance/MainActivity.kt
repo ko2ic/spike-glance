@@ -14,13 +14,19 @@ import com.ko2ic.spike.glance.ui.theme.SpikeglanceTheme
 
 class MainActivity : ComponentActivity() {
 
+    companion object {
+        const val widgetItemKey = "widgetItemKey"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val valueFromParam = intent?.extras?.getInt(widgetItemKey, -1)
+
         setContent {
             SpikeglanceTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Greeting("Android")
+                    Greeting("Android: from $valueFromParam")
                 }
             }
         }
