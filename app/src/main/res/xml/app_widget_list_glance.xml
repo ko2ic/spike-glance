@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:configure="com.ko2ic.spike.glance.MyGlanceAppWidgetConfigure"
     android:description="@string/widget_description"
-    android:minWidth="28dp"
-    android:minHeight="14dp"
     android:initialLayout="@layout/glance_default_loading_layout"
+    android:minHeight="14dp"
+    android:minWidth="28dp"
     android:previewImage="@drawable/ic_launcher_foreground"
     android:previewLayout="@layout/widget_preview_layout"
     android:resizeMode="horizontal|vertical"
-    android:targetCellWidth="2"
     android:targetCellHeight="1"
+    android:targetCellWidth="2"
     android:widgetCategory="home_screen" />
