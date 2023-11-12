@@ -19,7 +19,10 @@
         <service
             android:enabled="true"
             android:exported="true"
-            android:name=".service.MyForegroundService"></service>
+            android:name=".service.MyForegroundService" />
+        <receiver
+            android:exported="true"
+            android:name=".receiver.MyBroadcastReceiver" />
 
         <activity
             android:exported="true"

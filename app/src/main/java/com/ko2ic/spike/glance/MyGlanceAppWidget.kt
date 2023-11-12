@@ -1,5 +1,6 @@
 package com.ko2ic.spike.glance
 
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import androidx.compose.runtime.Composable
@@ -15,6 +16,7 @@ import androidx.glance.action.actionParametersOf
 import androidx.glance.action.actionStartActivity
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.GlanceAppWidget
+import androidx.glance.appwidget.action.actionSendBroadcast
 import androidx.glance.appwidget.action.actionStartService
 import androidx.glance.appwidget.appWidgetBackground
 import androidx.glance.appwidget.lazy.LazyColumn
@@ -31,6 +33,7 @@ import androidx.glance.layout.width
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
+import com.ko2ic.spike.glance.receiver.MyBroadcastReceiver
 import com.ko2ic.spike.glance.service.MyForegroundService
 
 class MyGlanceAppWidget : GlanceAppWidget() {
@@ -60,13 +63,13 @@ class MyGlanceAppWidget : GlanceAppWidget() {
 
                     ) {
                     Button(
-                        text = "開始",
+                        text = "サービス開始",
                         onClick = actionStartService<MyForegroundService>(
                             isForegroundService = true,
                         ),
                     )
                     Spacer(
-                        modifier = GlanceModifier.width(16.dp)
+                        modifier = GlanceModifier.width(4.dp)
                     )
                     Button(
                         text = "終了",
@@ -74,6 +77,21 @@ class MyGlanceAppWidget : GlanceAppWidget() {
                             val intent = Intent(context, MyForegroundService::class.java)
                             context.stopService(intent)
                         })
+                }
+                Row(
+                    modifier =
+                    GlanceModifier.fillMaxWidth().padding(top = 4.dp, start = 8.dp, end = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+
+                    ) {
+                    Button(
+                        text = "Broadcast送信",
+                        onClick = actionSendBroadcast(
+                            MyBroadcastReceiver.ACTION_RESTART_APP,
+                            ComponentName(context, MyBroadcastReceiver::class.java)
+                        ),
+                    )
                 }
                 LazyColumn(
                     modifier = GlanceModifier
