@@ -115,7 +115,7 @@ class MyGlanceAppWidget : GlanceAppWidget() {
                         modifier = GlanceModifier.width(4.dp)
                     )
                     Button(
-                        text = "Worker",
+                        text = "Worker起動",
                         onClick = {
                             val appWidgetId = GlanceAppWidgetManager(context).getAppWidgetId(id)
                             MyWorker.start(context, intArrayOf(appWidgetId))
