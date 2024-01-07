@@ -2,6 +2,7 @@ package com.ko2ic.spike.glance.worker
 
 import android.content.Context
 import androidx.glance.appwidget.GlanceAppWidgetManager
+import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.work.CoroutineWorker
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -41,7 +42,12 @@ class MyWorker constructor(
             .map { appWidgetId -> glanceAppWidgetManager.getGlanceIdBy(appWidgetId) }
             .map { glanceId ->
                 launch {
-                    widget.updateList(context, glanceId)
+                    updateAppWidgetState(context, glanceId) { preferences ->
+                        val current = preferences[MyGlanceAppWidget.PREF_KEY_LIST] ?: MyGlanceAppWidget.INITIAL_STATE
+                        preferences[MyGlanceAppWidget.PREF_KEY_LIST] =
+                            current.map { (it.toInt() * it.toInt()).toString() }.toSet()
+                    }
+                    widget.update(context, glanceId)
                 }
             }
             .joinAll()

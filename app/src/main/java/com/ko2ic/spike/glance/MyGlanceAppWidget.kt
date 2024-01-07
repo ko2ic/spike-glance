@@ -49,8 +49,8 @@ class MyGlanceAppWidget : GlanceAppWidget() {
 
     companion object {
 
-        private val PREF_KEY_LIST = stringSetPreferencesKey("pref_list")
-        private val INITIAL_STATE = setOf("0", "1", "2", "3", "4", "5")
+        val PREF_KEY_LIST = stringSetPreferencesKey("pref_list")
+        val INITIAL_STATE = setOf("0", "1", "2", "3", "4", "5")
     }
 
     override var stateDefinition: GlanceStateDefinition<*> = PreferencesGlanceStateDefinition
